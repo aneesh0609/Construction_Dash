@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Home, Grid, Layers, Image, Star, Menu, X, Phone, LogOut } from "lucide-react";
+import { Home, Grid, Layers, Image, Star, Menu, X, Phone, LogOut, Badge, Laptop } from "lucide-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../redux/slices/authSlice";
@@ -18,6 +18,8 @@ export default function Sidebar() {
     { name: "Services", path: "/services", icon: <Layers size={20} /> },
     { name: "Features", path: "/features", icon: <Star size={20} /> },
     { name: "Gallery", path: "/gallery", icon: <Image size={20} /> },
+    { name: "Job", path: "/job", icon: <Badge size={20} /> },
+    { name: "Career", path: "/career", icon: <Laptop size={20} /> },
     { name: "Contact", path: "/contact", icon: <Phone size={20} /> },
   ];
 

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import { loginUser, clearRedirectFlag } from "../redux/slices/authSlice";
 
 export default function AdminLogin() {
@@ -14,19 +13,35 @@ export default function AdminLogin() {
   );
 
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // ✅ Redirect to dashboard once logged in
   useEffect(() => {
     if (redirectToDashboard && user) {
-      toast.success("Admin logged in successfully!");
-      navigate("/dashboard");
-      dispatch(clearRedirectFlag());
+      const toastId = toast.success("Admin logged in successfully!");
+      setTimeout(() => {
+        toast.dismiss(toastId);
+        navigate("/dashboard");
+        dispatch(clearRedirectFlag());
+        setIsSubmitting(false); // re-enable button
+      }, 900);
     }
   }, [redirectToDashboard, user, navigate, dispatch]);
 
-  const handleSubmit = (e) => {
+  // ✅ Handle form submission safely
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(loginUser(formData));
+
+    if (isSubmitting) return; // Prevent multiple clicks
+
+    setIsSubmitting(true);
+
+    try {
+      await dispatch(loginUser(formData)).unwrap();
+    } catch (err) {
+      toast.error(err || "Login failed. Please try again.");
+      setIsSubmitting(false); // re-enable button if error
+    }
   };
 
   return (
@@ -55,7 +70,10 @@ export default function AdminLogin() {
             onChange={(e) =>
               setFormData({ ...formData, email: e.target.value })
             }
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition"
+            disabled={isSubmitting}
+            className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition ${
+              isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+            }`}
           />
 
           <input
@@ -67,28 +85,55 @@ export default function AdminLogin() {
             onChange={(e) =>
               setFormData({ ...formData, password: e.target.value })
             }
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition"
+            disabled={isSubmitting}
+            className={`w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition ${
+              isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+            }`}
           />
         </div>
 
         <button
           type="submit"
-          disabled={loading}
-          className={`w-full py-3 text-white font-medium rounded-lg shadow-md transition-all ${
-            loading
+          disabled={isSubmitting}
+          className={`w-full py-3 text-white font-medium rounded-lg shadow-md transition-all flex justify-center items-center ${
+            isSubmitting
               ? "bg-blue-400 cursor-not-allowed"
               : "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800"
           }`}
         >
-          {loading ? "Logging in..." : "Login"}
+          {isSubmitting ? (
+            <>
+              <svg
+                className="animate-spin h-5 w-5 mr-2 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                ></path>
+              </svg>
+              Logging in...
+            </>
+          ) : (
+            "Login"
+          )}
         </button>
 
         <p className="text-center text-gray-500 text-sm">
           Only authorized admins can access this panel.
         </p>
       </form>
-
-      <ToastContainer position="top-right" autoClose={2000} />
     </div>
   );
 }

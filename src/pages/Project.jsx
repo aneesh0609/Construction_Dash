@@ -81,7 +81,7 @@ export default function AdminProjectsPage() {
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-3xl sm:text-4xl font-bold text-slate-800">Projects Management</h1>
-            <p className="text-slate-600 mt-1 text-sm sm:text-base">Create, edit, and manage your portfolio projects</p>
+            <p className="text-slate-600 mt-1 text-sm sm:text-base">Create, edit, and manage your projects</p>
           </div>
           
       

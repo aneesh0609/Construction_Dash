@@ -5,6 +5,9 @@ import projectsReducer from "./slices/projectSlice";
 import featuresReducer from "./slices/featureSlice";
 import galleryReducer from "./slices/gallerySlice";
 import contactReducer from "./slices/contactSlice";
+import careerReducer from "./slices/careerSlice";
+import jobReducer from "./slices/jobSlice";
+
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +17,7 @@ export const store = configureStore({
       projects: projectsReducer,
       gallery: galleryReducer,
       contact: contactReducer,
+      jobs: jobReducer,
+      careers: careerReducer,
   },
 });

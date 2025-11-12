@@ -13,6 +13,8 @@ import AdminDashboard from "./pages/Dashboard";
 import { fetchCurrentUser } from "./redux/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import CareerApplications from "./pages/Career";
+import AdminJobDashboard from "./pages/Job";
 
 function App() {
  
@@ -49,6 +51,8 @@ function App() {
           <Route path="services" element={<ServicesAdminPage />} />
           <Route path="features" element={<FeaturesAdminPage />} />
           <Route path="gallery" element={<GalleryPage />} />
+          <Route path="job" element={<AdminJobDashboard />} />
+          <Route path="career" element={<CareerApplications />} />
           <Route path="contact" element={<ContactPage />} />
         </Route>
     
