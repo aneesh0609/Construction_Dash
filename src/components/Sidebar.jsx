@@ -80,7 +80,7 @@ export default function Sidebar() {
       <div className="hidden md:flex w-64 bg-stone-800 min-h-screen text-white flex-col justify-between">
         <div>
           <div className="p-6 text-2xl font-bold border-b border-gray-700">
-            Beena Construction
+            Bennu Construction
           </div>
           <nav className="mt-4">
             {links.map((link) => (
