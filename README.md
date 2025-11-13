@@ -1,16 +1,178 @@
-# React + Vite
+# 🛠️ Construction Website – Admin Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This folder contains the **Admin Dashboard** used to manage all content of the Construction Website.  
+It provides a secure interface for administrators to manage:
 
-Currently, two official plugins are available:
+- Projects  
+- Services  
+- Features  
+- Gallery Images  
+- Career Applications  
+- Job Listings  
+- Contact Queries  
+- Admin Profile (via authentication)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The dashboard is built with **React + Vite**, state-managed using **Redux Toolkit**, and styled with **TailwindCSS**. It communicates with the backend API using axios (`withCredentials: true`) for JWT cookie authentication.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ⚙️ Tech Stack
 
-## Expanding the ESLint configuration
+- **React 19**
+- **React Router v7**
+- **Redux Toolkit**
+- **Vite**
+- **TailwindCSS**
+- **Axios**
+- **React Toastify**
+- **Lucide Icons**
+- **Framer Motion**
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 📁 Folder Structure
+
+dashboard/
+│
+├── src/
+│ ├── components/ # AdminLayout, Sidebar, ProtectedRoute, UI components
+│ ├── pages/ # Dashboard pages (Projects, Services, Gallery, etc.)
+│ ├── redux/
+│ │ ├── slices/ # State slices (auth, projects, services, gallery etc.)
+│ │ └── store.js # Central Redux store
+│ ├── api/ # axios instance (API.js)
+│ ├── App.jsx # Routing logic / Admin routes
+│ ├── main.jsx # Entry point
+│ └── index.css # TailwindCSS
+│
+├── public/ # Static icons, images (if any)
+├── vite.config.js
+├── package.json
+└── .env.example # Example environment variables
+
+VITE_API_URL=http://localhost:5000
+
+
+For production:
+
+VITE_API_URL=https://your-live-backend.com
+
+*/------------------------------------------------------------------------------------------/*
+
+
+
+
+🔐 Authentication
+
+The admin panel uses:
+
+Protected routes
+
+JWT cookies
+
+Auto fetch current user on load
+
+If not authenticated:
+
+User is redirected to /login
+
+Dashboard pages are inaccessible
+
+
+*/------------------------------------------------------------------------------------------/*
+
+🧭 Routing Structure
+Public Route
+
+/login – Admin Login Page
+
+Protected Admin Routes
+
+Wrapped inside <ProtectedRoute> and <AdminLayout />:
+
+/dashboard – Overview analytics
+
+/projects – Manage projects
+
+/services – Manage services
+
+/features – Manage features
+
+/gallery – Upload / delete gallery images
+
+/job – Manage job listings
+
+/career – Manage career submissions
+
+/contact – View contact form submissions
+
+
+
+*/------------------------------------------------------------------------------------------/*
+
+
+🚀 Development Setup
+
+1️⃣ Install dependencies
+npm install
+
+2️⃣ Start development server
+npm run dev
+
+Dashboard will run on:
+http://localhost:5174
+
+
+
+
+*/------------------------------------------------------------------------------------------/*
+
+🏗️ Production Build
+
+To generate a production build:
+
+npm run build
+
+
+*/------------------------------------------------------------------------------------------/*
+
+🔌 API Requirements
+
+Backend must allow CORS:
+
+origin: [
+  process.env.FRONTEND_URL,
+  process.env.DASHBOARD_URL
+],
+credentials: true
+
+
+Your backend already supports:
+
+DASHBOARD_URL=http://localhost:5174  (check your terminal for latest url)
+
+*/------------------------------------------------------------------------------------------/*
+
+🧯 Troubleshooting
+
+Issue	Reason	Fix
+
+Login not working	Cookies blocked	Ensure backend has credentials: true and correct CORS
+
+Redux state empty	Backend URL incorrect	Verify VITE_API_URL
+
+Upload fails	Cloudinary key missing	Check backend .env
+
+Route blank / layout missing	Incorrect nested route	Check AdminLayout & Outlet usage
+
+"Loading…" stuck	Backend not reachable	API base URL wrong
+
+
+*/------------------------------------------------------------------------------------------/*
+
+
+👨‍💻 Developer
+
+Name: Aneesh Chauhan
+Role: Full Stack Developer (MERN)
+License: Client Private Use Only
